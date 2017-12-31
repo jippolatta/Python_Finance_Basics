@@ -1,0 +1,36 @@
+import pandas as pd
+from pandas_datareader import data, wb
+import datetime
+import time
+
+#Set the start and end dates
+start = datetime.datetime(2014,1,1)
+end = datetime.date.today()
+
+#Define the instruments we want to download
+instruments = ["CAR.AX", "BTT.AX", "WES.AX", "WBC.AX", "CBA.AX", "AMC.AX",
+               "BHP.AX", "CTX.AX"]
+
+#Download the data
+for instrument in instruments:
+    try: 
+        #Add a 2 second wait between downloads
+        time.sleep(2)
+        
+        #Print the name of the instrument
+        print(instrument)
+        
+        #Download the data
+        df = data.DataReader(instrument, "yahoo", start, end)
+
+        #Save the data as a csv
+        df.to_csv(instrument + ".csv")
+
+        #Print the head to make sure there was data downloaded
+        print(df.head())
+
+    except:
+        print("Error Connecting to Yahoo...")
+        pass
+
+
